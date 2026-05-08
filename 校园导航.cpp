@@ -42,10 +42,6 @@ void ShowHistory(HistoryList *H) {
     }
     printf("========================\n");
 }
-void ClearHistory(HistoryList *H) {
-    H->count = 0;
-    printf("操作历史已清空！\n");
-}
 void InitList(SeqList *L) {
     L->length = 0;
 }
@@ -105,6 +101,7 @@ int main() {
 
     int op, num;
     char newName[30];
+    char historyMsg[120];
 
     while (1) {
         printf("\n========== 楼宇管理系统 ==========\n");
@@ -125,12 +122,17 @@ int main() {
 
             case 1:
                 ShowAll(&L);
+                AddHistory(&H,"查看所有楼宇");
                 break;
 
             case 2:
                 ShowAll(&L);
                 printf("请输入楼宇编号：");
                 scanf("%d", &num);
+                if(num>=1&&num<=L.length){
+					sprintf(historyMsg,"查询楼宇:%s",L.name[num-1]);
+				AddHistory(&H,historyMsg);
+                }
                 SelectByNum(&L, num);
                 break;
 
@@ -138,12 +140,20 @@ int main() {
                 printf("请输入新楼宇名称：");
                 scanf("%s", newName);
                 AddBuilding(&L, newName);
+                if (L.length <= MAXSIZE) {
+				        sprintf(historyMsg, "添加楼宇：%s", newName);
+				        AddHistory(&H, historyMsg);
+				}
                 break;
 
             case 4:
                 ShowAll(&L);
                 printf("请输入要删除的楼宇编号：");
                 scanf("%d", &num);
+                if (num >= 1 && num <= L.length) {
+				    sprintf(historyMsg, "删除楼宇：%s", L.name[num - 1]);
+				    AddHistory(&H, historyMsg);
+				}
                 DeleteByNum(&L, num);
                 break;
 
@@ -151,9 +161,15 @@ int main() {
                 ShowAll(&L);
                 printf("请输入要修改的楼宇编号：");
                 scanf("%d", &num);
-                printf("请输入新的名称：");
-                scanf("%s", newName);
-                ModifyBuilding(&L, num, newName);
+                if (num >= 1 && num <= L.length) {
+				    char oldName[30];
+				    strcpy(oldName, L.name[num - 1]);
+                    printf("请输入新的名称：");
+                    scanf("%s", newName);
+                    ModifyBuilding(&L, num, newName);
+                    sprintf(historyMsg, "修改楼宇：%s -> %s", oldName, newName);
+					AddHistory(&H, historyMsg);
+				} 
                 break;
             case 6:
 			                ShowHistory(&H); 
