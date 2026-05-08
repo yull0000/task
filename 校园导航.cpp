@@ -93,7 +93,9 @@ void ModifyBuilding(SeqList *L, int index, char *newName) {
 
 int main() {
     SeqList L;
+    HistoryList H;
     InitList(&L);
+    InitHistory(&H);
     AddBuilding(&L, "明理楼");
     AddBuilding(&L, "明德楼");
     AddBuilding(&L, "明治楼");
@@ -111,6 +113,7 @@ int main() {
         printf("3. 添加新楼宇\n");
         printf("4. 删除楼宇\n");
         printf("5. 修改楼宇名称\n");
+        printf("6. 查看操作历史\n"); 
         printf("0. 退出\n");
         printf("请输入操作：");
         scanf("%d", &op);
@@ -152,6 +155,9 @@ int main() {
                 scanf("%s", newName);
                 ModifyBuilding(&L, num, newName);
                 break;
+            case 6:
+			                ShowHistory(&H); 
+			                break;
 
             default:
                 printf("输入错误，请重新选择！\n");
