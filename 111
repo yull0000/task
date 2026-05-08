@@ -8,14 +8,10 @@ typedef struct {
 } SeqList;
 typedef struct {
     char action[100]; 
-    int serialNum; 
+    int s
 } History;
 typedef struct {
-    History records[MAX_HISTORY];
-    int count;
-    int globalSerial;  
-} HistoryList;
-void InitHistory(HistoryList *H) {
+
     H->count = 0;
     H->globalSerial = 0;
 }
