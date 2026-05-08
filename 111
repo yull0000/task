@@ -1,19 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #define MAXSIZE 20
-#define MAX_HISTORY 50
-typedef struct {
-    char name[MAXSIZE][30];
-    int length;
-} SeqList;
-typedef struct {
-    char action[100]; 
-    int s
-} History;
-typedef struct {
-
-    H->count = 0;
-    H->globalSerial = 0;
+#d
 }
 void AddHistory(HistoryList *H, const char *action) {
     if (H->count >= MAX_HISTORY) {
