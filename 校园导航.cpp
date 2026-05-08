@@ -86,7 +86,10 @@ void ModifyBuilding(SeqList *L, int index, char *newName) {
     strcpy(L->name[index - 1], newName);
     printf("修改成功！\n");
 }
-
+void ClearHistory(HistoryList *H) {
+    H->count = 0;
+    printf("操作历史已清空！\n");
+}
 int main() {
     SeqList L;
     HistoryList H;
@@ -111,6 +114,7 @@ int main() {
         printf("4. 删除楼宇\n");
         printf("5. 修改楼宇名称\n");
         printf("6. 查看操作历史\n"); 
+        printf("7. 清空操作历史\n");
         printf("0. 退出\n");
         printf("请输入操作：");
         scanf("%d", &op);
@@ -174,6 +178,9 @@ int main() {
             case 6:
 			                ShowHistory(&H); 
 			                break;
+            case 7:
+                ClearHistory(&H);
+                break;
 
             default:
                 printf("输入错误，请重新选择！\n");
