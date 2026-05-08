@@ -1,10 +1,51 @@
 #include <stdio.h>
 #include <string.h>
 #define MAXSIZE 20
+#define MAX_HISTORY 50
 typedef struct {
     char name[MAXSIZE][30];
     int length;
 } SeqList;
+typedef struct {
+    char action[100]; 
+    int serialNum; 
+} History;
+typedef struct {
+    History records[MAX_HISTORY];
+    int count;
+    int globalSerial;  
+} HistoryList;
+void InitHistory(HistoryList *H) {
+    H->count = 0;
+    H->globalSerial = 0;
+}
+void AddHistory(HistoryList *H, const char *action) {
+    if (H->count >= MAX_HISTORY) {
+        for (int i = 0; i < MAX_HISTORY - 1; i++) {
+            H->records[i] = H->records[i + 1];
+        }
+        H->count = MAX_HISTORY - 1;
+    }
+    strcpy(H->records[H->count].action, action);
+    H->globalSerial++;
+    H->records[H->count].serialNum = H->globalSerial;
+    H->count++;
+}
+void ShowHistory(HistoryList *H) {
+    if (H->count == 0) {
+        printf("\n暂无操作历史记录。\n");
+        return;
+    }   
+    printf("\n===== 操作历史记录 =====\n");
+    for (int i = 0; i < H->count; i++) {
+        printf("%d. [操作#%d] %s\n", i + 1, H->records[i].serialNum, H->records[i].action);
+    }
+    printf("========================\n");
+}
+void ClearHistory(HistoryList *H) {
+    H->count = 0;
+    printf("操作历史已清空！\n");
+}
 void InitList(SeqList *L) {
     L->length = 0;
 }
